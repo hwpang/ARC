@@ -44,7 +44,7 @@ from itertools import product
 from typing import Optional, Tuple, Union
 
 import openbabel as ob
-import pybel as pyb
+from openbabel import pybel as pyb
 from rdkit import Chem
 from rdkit.Chem.rdchem import EditableMol as RDMol
 

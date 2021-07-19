@@ -6,7 +6,7 @@ import numpy as np
 import os
 from typing import Dict, Iterable, List, Optional, Tuple, Union
 
-import pybel
+from openbabel import pybel
 import qcelemental as qcel
 from rdkit import Chem
 from rdkit.Chem import rdMolTransforms as rdMT
