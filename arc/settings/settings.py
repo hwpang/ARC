@@ -28,37 +28,32 @@ import string
 #    },
 # }
 servers = {
-    'server1': {
-        'cluster_soft': 'OGE',
-        'address': 'server1.host.edu',
-        'un': '<username>',
-        'key': 'path_to_rsa_key',
-    },
-    'server2': {
-        'cluster_soft': 'Slurm',
-        'address': 'server2.host.edu',
-        'un': '<username>',
-        'key': 'path_to_rsa_key',
-        'cpus': 24,  # number of cpu's per node, optional (default: 8)
-        'memory': 256,  # amount of memory per node in GB, optional (default: 16)
-    },
+    'c3ddb': {
+        'cluster_soft': 'Slurm',  # Simple Linux Utility for Resource Management
+        'address': 'c3ddb01.mit.edu',
+        'un': 'hwpang',
+        'key': '/home/hwpang/.ssh/id_rsa'},
     'local': {
         'cluster_soft': 'Slurm',
-        'un': '<username>',
-        'cpus': 48,
+        'un': 'hwpang',
     },
+    'supercloud': {
+        'cluster_soft': 'Slurm',  # Simple Linux Utility for Resource Management
+        'address': 'txe1-login.mit.edu',
+        'un': 'hwpang',
+        'key': '/home/hwpang/.ssh/id_rsa'},
 }
 
 # List here servers you'd like to associate with specific ESS.
 # An ordered list of servers indicates priority
 # Keeping this dictionary empty will cause ARC to scan for software on the servers defined above
 global_ess_settings = {
-    'gaussian': ['local', 'server2'],
-    'molpro': ['local', 'server2'],
-    'onedmin': 'server1',
-    'orca': 'local',
-    'qchem': 'server1',
-    'terachem': 'server1',
+    'gaussian': ['local'],
+    'molpro': 'local',
+    'onedmin': 'local',
+    'orca': ['supercloud'],
+    'qchem': 'local',
+#    'terachem': 'local',
 }
 
 # List here job types to execute by default
@@ -84,7 +79,7 @@ levels_ess = {
     'molpro': ['ccsd', 'cisd', 'vpz'],
     'qchem': ['m06-2x'],
     'orca': ['dlpno'],
-    'terachem': ['pbe'],
+#    'terachem': ['pbe'],
 }
 
 check_status_command = {'OGE': 'export SGE_ROOT=/opt/sge; /opt/sge/bin/lx24-amd64/qstat',
