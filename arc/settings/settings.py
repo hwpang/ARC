@@ -28,23 +28,9 @@ import string
 #    },
 # }
 servers = {
-    # 'server1': {
-    #     'cluster_soft': 'OGE',
-    #     'address': 'server1.host.edu',
-    #     'un': '<username>',
-    #     'key': 'path_to_rsa_key',
-    # },
-    # 'server2': {
-    #     'cluster_soft': 'Slurm',
-    #     'address': 'server2.host.edu',
-    #     'un': '<username>',
-    #     'key': 'path_to_rsa_key',
-    #     'cpus': 48,  # number of cpu's per node, optional (default: 8)
-    #     'memory': 128,  # amount of memory per node in GB, optional (default: 16)
-    # },
     'local': {
         'cluster_soft': 'Slurm',
-        'un': 'xiaorui',
+        'un': 'hwpang',
     },
 }
 
@@ -53,11 +39,11 @@ servers = {
 # Keeping this dictionary empty will cause ARC to scan for software on the servers defined above
 global_ess_settings = {
     'gaussian': ['local'],
-    # 'molpro': 'server2',
-    # 'onedmin': 'server1',
-    # 'orca': 'local',
-    # 'qchem': 'server1',
-    # 'terachem': 'server1',
+    'molpro': 'local',
+    'onedmin': 'local',
+    'orca': ['local'],
+    'qchem': 'local',
+#    'terachem': 'local',
 }
 
 # List here job types to execute by default
@@ -83,7 +69,7 @@ levels_ess = {
     'molpro': ['ccsd', 'cisd', 'vpz'],
     'qchem': ['m06-2x'],
     'orca': ['dlpno'],
-    'terachem': ['pbe'],
+#    'terachem': ['pbe'],
 }
 
 check_status_command = {'OGE': 'export SGE_ROOT=/opt/sge; /opt/sge/bin/lx24-amd64/qstat',

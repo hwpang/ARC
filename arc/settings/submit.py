@@ -138,7 +138,7 @@ rm -rf $WorkDir
 """,
     },
 
-    'rmg': {
+    'local': {
         # Gaussian 16
         'gaussian': """#!/bin/bash -l
 #SBATCH -p long
@@ -169,6 +169,7 @@ export GAUSS_SCRDIR
 
 mkdir -p $GAUSS_SCRDIR
 mkdir -p $WorkDir
+export g16root=/opt
 
 cd $WorkDir
 . $g16root/g16/bsd/g16.profile
@@ -448,7 +449,7 @@ rm -rf $WorkDir
 
 """,
     },
-    'txe1': {
+    'local': {
         'orca': """#!/bin/bash -l
 #SBATCH -p normal
 #SBATCH -J {name}
@@ -489,6 +490,50 @@ cp $SubmitDir/input.in .
 $orcadir/orca input.in > input.log
 cp input.log  $SubmitDir/
 rm -rf  $WorkDir
+        """,
+        'gaussian': """#!/bin/bash -l
+#SBATCH -J {name}
+#SBATCH -N 1
+#SBATCH -n {cpus}
+#SBATCH --time=5-0:00:00
+#SBATCH --mem-per-cpu={memory}
+#SBATCH -e err.txt
+#SBATCH -o out.txt
+
+echo "============================================================"
+echo "Job ID : $SLURM_JOB_ID"
+echo "Job Name : $SLURM_JOB_NAME"
+echo "Starting on : $(date)"
+echo "Running on node : $SLURMD_NODENAME"
+echo "Current directory : $(pwd)"
+echo "memory per node : $SLURM_MEM_PER_NODE
+echo "memory per cpu : $SLURM_MEM_PER_CPU
+echo "============================================================"
+
+WorkDir=/state/partition1/user/{un}/$SLURM_JOB_NAME-$SLURM_JOB_ID
+SubmitDir=`pwd`
+
+GAUSS_SCRDIR=/state/partition1/user/{un}/g16/$SLURM_JOB_NAME-$SLURM_JOB_ID
+export GAUSS_SCRDIR
+
+mkdir -p $GAUSS_SCRDIR
+mkdir -p $WorkDir
+export PATH=$PATH:/home/gridsan/groups/RMG/Software/gaussian/g16
+export PATH=$PATH:/home/gridsan/groups/RMG/Software/gaussian/gv
+export g16root=/home/gridsan/groups/RMG/Software/gaussian
+source /home/gridsan/groups/RMG/Software/gaussian/g16/bsd/g16.profile
+
+cd $WorkDir
+
+cp "$SubmitDir/input.gjf" .
+cp "$SubmitDir/check.chk" .
+
+g16 < input.gjf > input.log
+formchk check.chk check.fchk
+cp * "$SubmitDir/"
+
+rm -rf $GAUSS_SCRDIR
+rm -rf $WorkDir
         """,
     },
     'pbs_sample': {
