@@ -968,9 +968,7 @@ end
             if self.scan is not None and self.scan:
                 scans = [' '.join([str(num) for num in self.scan])]
             elif self.directed_scans is not None:
-                scans = list()
-                for directed_scan in self.directed_scans:
-                    scans.append(' '.join([str(num) for num in directed_scan]))
+                scans = [' '.join([str(num) for num in self.directed_scans])]
             else:
                 raise JobError(f'A scan job must either get a `scan` or a `directed_scans` argument.\n'
                                f'Got neither for job {self.job_name} of {self.species_name}.')
