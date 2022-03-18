@@ -792,7 +792,7 @@ class Scheduler(object):
         """
         try:
             job.determine_job_status()  # also downloads output file
-        except (IOError, JobError):
+        except:
             if job.job_type not in ['orbitals']:
                 logger.warning(f'Tried to determine status of job {job.job_name}, but it seems like the job never ran. '
                                f'Re-running job.')
